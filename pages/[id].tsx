@@ -1,14 +1,17 @@
 import { Box, Button, ButtonGroup, Heading, Spacer, Text } from '@chakra-ui/react';
-import { DocumentData } from 'firebase/firestore';
+import { DocumentData, query } from 'firebase/firestore';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { NextRouter, useRouter } from 'next/router';
 
-export default function detail(todo: DocumentData) {
+export default function detail() {
+  const router = useRouter;
+  const id = router.query.todoId
+
   return (
     <>
       <Text>編集ページです</Text>
       <Box p='2'>
-        <Heading size='md'>{todo.title}</Heading>
+        <Heading size='md'>{id}</Heading>
       </Box>
       <Spacer />
       <ButtonGroup gap='2'>

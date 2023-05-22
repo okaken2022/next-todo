@@ -62,6 +62,7 @@ export default function Home() {
   }
   const todoId = uuidv4();
   const [todos, setTodos] = useState<DocumentData[]>([]);
+  
 
   {
     /* todosコレクションの中のドキュメントにはuidを設定してtodoを追加していく*/
@@ -133,15 +134,16 @@ export default function Home() {
   {
     /* firestoreに保存されている特定のドキュメントを編集 */
   }
-  const editTodo = async ({ todoId, title, status }) => {
-    if (!currentUser) return;
-    const todoRef = doc(db, 'users', currentUser.uid, 'todos', todoId);
-    await updateDoc(todoRef, {
-      title: title,
-      status: status,
-    });
-  };
+  // const editTodo = async ({ todoId, title, status }) => {
+  //   if (!currentUser) return;
+  //   const todoRef = doc(db, 'users', currentUser.uid, 'todos', todoId);
+  //   await updateDoc(todoRef, {
+  //     title: title,
+  //     status: status,
+  //   });
+  // };
 
+  console.log(todos);
   return (
     <>
       <Header />
@@ -206,9 +208,12 @@ export default function Home() {
                 <Button colorScheme='red' onClick={() => deleteTodo(todo)}>
                   削除
                 </Button>
-                <Link as={`/${todo.id}`} href='/[id]'>
-                  <Button colorScheme='blue'>編集</Button>
-                </Link>
+                  <Button colorScheme='blue' onClick={() => {
+      router.push({
+        pathname: `/${todo.id}`,
+        query: {todoId: todo.id}
+      })
+                  }}>編集</Button>
               </ButtonGroup>
             </Flex>
             <Divider orientation='horizontal' mt='4' />
